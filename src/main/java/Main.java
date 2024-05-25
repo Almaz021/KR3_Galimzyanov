@@ -1,11 +1,14 @@
-import javax.imageio.ImageIO;
-import java.io.*;
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Main {
     private static Map<Integer, byte[]> map;
-    public static void main(String[] args) throws FileNotFoundException {
+
+    public static void main(String[] args) {
         map = new HashMap<>();
         start();
     }
@@ -44,6 +47,7 @@ public class Main {
             thread6.join();
             thread7.join();
             thread8.join();
+            System.out.println("" + f1.getData().getPart() + f2.getData().getPart() + f3.getData().getPart() + f4.getData().getPart() + f5.getData().getPart() + f6.getData().getPart() + f7.getData().getPart() + f8.getData().getPart());
             map.put(f1.getData().getPart(), f1.getData().getData());
             map.put(f2.getData().getPart(), f2.getData().getData());
             map.put(f3.getData().getPart(), f3.getData().getData());
@@ -56,13 +60,13 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        String fileName = "src\\main\\resources\\v9\\1.png";
+        String fileName = "src\\main\\resources\\v9\\9.png";
 
 
-        try (BufferedOutputStream writer = new BufferedOutputStream(new FileOutputStream(fileName))){
+        try (BufferedOutputStream writer = new BufferedOutputStream(new FileOutputStream(fileName))) {
             for (int i = 0; i < 8; i++) {
+                System.out.println(Arrays.toString(map.get(i)));
                 write(writer, i);
-                writer.write(map.get(i));
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -72,5 +76,4 @@ public class Main {
     public static synchronized void write(BufferedOutputStream writer, int i) throws IOException {
         writer.write(map.get(i));
     }
-
 }

@@ -32,9 +32,12 @@ public class FileThread implements Runnable {
 
             byte[] num4 = new byte[4];
             is.read(num4);
-            int part = transl(num3);
-            data = new FileData(sz, even, fileData, part);
+            int part = transl(num4);
 
+            if (check(fileData) == even) {
+                System.out.println("Данные полные");
+            }
+            data = new FileData(sz, even, fileData, part);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -47,5 +50,13 @@ public class FileThread implements Runnable {
             value = (s[i] & 0xFF)+(value << 8);
         }
         return value;
+    }
+
+    public int check(byte[] d) {
+        int res = 0;
+        for (int i = 0; i < d.length; i++) {
+            res += (int) Integer.toBinaryString(d[i]).chars().filter(item->item == '1').count();
+        }
+        return res%2;
     }
 }
